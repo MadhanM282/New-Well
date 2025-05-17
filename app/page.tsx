@@ -6,29 +6,55 @@ import Link from "next/link"
 import { CheckCircle, ChevronRight, Clock, MapPin, Phone, Star, Wrench } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { MobileMenu } from "../components/mobile-menu"
-import logo from "../assets/logo.svg"
+import logo from "../assets/logo1.png"
 import freight from '../assets/Freight.jpg'
 import HomeLifts from "../assets/Home.png"
 import Panoramic from '../assets/Panoramic.jpeg'
 import Passenger from '../assets/Passenger.jpg'
+import emailjs from '@emailjs/browser'
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    emailFrom: '',
+    serviece: '',
+    message: '',
+    mobile: ''
+  })
+
+  const handleContactForm = (value: any, target: string) => {
+    setContactForm({ ...contactForm, [target]: value } as { name: string; emailFrom: string; serviece: string; message: string; mobile: string });
+  }
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen)
+  }
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    console.log(e.target)
+    // emailjs.send("service_z2v1koy","template_3g333cm",);
+    // emailjs.sendForm('service_z2v1koy', 'template_3g333cm', e.target, 'l0o5lraDJGSJwyuBO').then(() => {
+    //   // btn.value = 'Send Email';
+    //   alert('Sent!');
+    // }, (err) => {
+    //   // btn.value = 'Send Email';
+    //   alert(JSON.stringify(err));
+    // });
   }
 
   return (
     <div className="flex min-h-screen flex-col">
       <MobileMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
+        <div className="me-auto mr-auto md:container md:px-8 px-4 flex h-16 items-center justify-between">
           <div className="flex items-center gap-2">
             <Image
               src={logo}
               alt="New Well Elevators Logo"
-              width={32}
+              width={50}
               height={32}
               className="rounded"
             />
@@ -46,8 +72,8 @@ export default function Home() {
             </Link>
             {/* <Link href="#projects" className="text-sm font-medium hover:text-primary">
               Projects
-            </Link>
-            <Link href="#testimonials" className="text-sm font-medium hover:text-primary">
+            </Link> */}
+            {/* <Link href="#testimonials" className="text-sm font-medium hover:text-primary">
               Testimonials
             </Link> */}
             <Link href="#contact" className="text-sm font-medium hover:text-primary">
@@ -55,7 +81,7 @@ export default function Home() {
             </Link>
           </nav>
           <div className="flex items-center gap-4">
-            <a style={{ width: "133px" }} href="tel:+919676616995" className="text-primary font-medium inline-block rounded-md border border-transparent bg-indigo-600 text-center font-medium text-white hover:bg-indigo-700 py-2 hidden md:flex">
+            <a style={{ width: "133px" }} href="tel:+919676616995" className="text-primary font-medium inline-block rounded-md border border-transparent bg-indigo-600 text-center font-medium text-white hover:bg-indigo-700 py-2 hidden md:flex justify-center">
               Call Us
             </a>
             <a
@@ -471,7 +497,7 @@ export default function Home() {
         </section>*/}
 
         {/* Testimonials Section */}
-        {/*<section id="testimonials" className="py-16 md:py-24 bg-muted/50">
+        {/* <section id="testimonials" className="py-16 md:py-24 bg-white/100 relative">
           <div className="container">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">What Our Clients Say</h2>
@@ -540,7 +566,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>*/}
+        </section> */}
 
         {/* CTA Section */}
         <section id="KAT" className="py-16 md:py-24 bg-primary text-primary-foreground relative">
@@ -568,7 +594,7 @@ export default function Home() {
               </div>
               <div className="bg-primary-foreground p-6 rounded-lg shadow-lg">
                 <h3 className="text-xl font-bold mb-4 text-foreground">Get a Free Quote</h3>
-                <form className="space-y-4">
+                <form className="space-y-4" onSubmit={(e)=>sendEmail(e)}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label htmlFor="name" className="text-sm font-medium text-foreground">
@@ -577,7 +603,10 @@ export default function Home() {
                       <input
                         id="name"
                         placeholder="John Doe"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        name='name'
+                        value={contactForm?.name || ''}
+                        onChange={(e) => handleContactForm(e.target.value, 'name')}
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                       />
                     </div>
                     <div className="space-y-2">
@@ -587,8 +616,11 @@ export default function Home() {
                       <input
                         id="email"
                         type="email"
+                        name='emailFrom'
+                        value={contactForm?.emailFrom || ''}
+                        onChange={(e) => handleContactForm(e.target.value, 'emailFrom')}
                         placeholder="john@example.com"
-                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                       />
                     </div>
                   </div>
@@ -599,8 +631,11 @@ export default function Home() {
                     <input
                       id="phone"
                       type="tel"
+                      name='mobile'
+                      value={contactForm?.mobile || ''}
+                      onChange={(e) => handleContactForm(e.target.value, 'mobile')}
                       placeholder="+1 (555) 000-0000"
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                     />
                   </div>
                   <div className="space-y-2">
@@ -609,14 +644,17 @@ export default function Home() {
                     </label>
                     <select
                       id="service"
-                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      name='service'
+                      value={contactForm?.serviece || ''}
+                      onChange={(e) => handleContactForm(e.target.value, 'serviece')}
+                      className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                     >
-                      <option value="">Select a service</option>
-                      <option value="installation">New Installation</option>
-                      <option value="maintenance">Maintenance</option>
-                      <option value="repair">Repair</option>
-                      <option value="modernization">Modernization</option>
-                      <option value="consultation">Consultation</option>
+                      <option className="text-black" value="">Select a service</option>
+                      <option className="text-black" value="installation">New Installation</option>
+                      <option className="text-black" value="maintenance">Maintenance</option>
+                      <option className="text-black" value="repair">Repair</option>
+                      <option className="text-black" value="modernization">Modernization</option>
+                      <option className="text-black" value="consultation">Consultation</option>
                     </select>
                   </div>
                   <div className="space-y-2">
@@ -626,10 +664,13 @@ export default function Home() {
                     <textarea
                       id="message"
                       placeholder="Tell us about your project..."
-                      className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                      name="message"
+                      value={contactForm?.message || ''}
+                      onChange={(e) => handleContactForm(e.target.value, 'message')}
+                      className="flex min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-black"
                     />
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button type="submit" className="w-full" >
                     Submit Request
                   </Button>
                 </form>

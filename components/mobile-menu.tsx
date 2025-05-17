@@ -3,6 +3,7 @@ import Link from "next/link"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
+
 interface MobileMenuProps {
   isOpen: boolean
   onClose: () => void
@@ -10,6 +11,8 @@ interface MobileMenuProps {
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   if (!isOpen) return null
+
+
 
   return (
     <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm lg:hidden">
