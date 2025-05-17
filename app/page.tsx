@@ -36,13 +36,7 @@ export default function Home() {
     e.preventDefault();
     console.log(e.target)
     // emailjs.send("service_z2v1koy","template_3g333cm",);
-    // emailjs.sendForm('service_z2v1koy', 'template_3g333cm', e.target, 'l0o5lraDJGSJwyuBO').then(() => {
-    //   // btn.value = 'Send Email';
-    //   alert('Sent!');
-    // }, (err) => {
-    //   // btn.value = 'Send Email';
-    //   alert(JSON.stringify(err));
-    // });
+    emailjs.sendForm('service_z2v1koy', 'template_3g333cm', e.target, 'l0o5lraDJGSJwyuBO')
   }
 
   return (
